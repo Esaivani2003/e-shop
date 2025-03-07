@@ -46,7 +46,7 @@ export default function Navbar() {
       <div
         className={`fixed top-0 right-0 w-64 h-full bg-gradient-to-b from-gray-900 to-gray-700 
                     shadow-lg transform ${isOpen ? "translate-x-0" : "translate-x-full"} 
-                    transition-transform duration-300 md:hidden`}
+                    transition-transform duration-300 md:hidden z-50`}
       >
         {/* Close Button */}
         <div className="flex justify-end p-4">

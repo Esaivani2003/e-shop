@@ -43,20 +43,20 @@ export default function ProductPage() {
   return (
     <Layout2>
       {/* 🔥 Special Offers Carousel */}
-      <div className="relative w-full overflow-hidden h-14 my-6">
-        <div className="w-full h-full flex flex-col items-start">
+      <div className="relative w-full h-14 my-6 flex justify-center item center overflow-hidden z-10" >
+      
           {offers.map((offer, index) => (
             <div
               key={offer.id}
-              className={`absolute left-1/2 transform -translate-x-1/2 w-80 text-center text-white font-semibold py-2 px-4 rounded-lg shadow-lg transition-opacity duration-500 ${offer.gradient} ${
-                index === currentOffer ? "opacity-100" : "opacity-0"
+              className={`absolute w-80 text-center text-white font-semibold py-2 px-4 rounded-lg shadow-lg transition-all duration-500 ${offer.gradient} ${
+                index === currentOffer ? "opacity-100 scale-100" : "opacity-0 scale-90"
               }`}
             >
               {offer.text}
             </div>
           ))}
         </div>
-      </div>
+    
 
       {/* 🛍 Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
