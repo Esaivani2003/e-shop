@@ -1,96 +1,83 @@
 "use client";
 
-import Link from "next/link";
-import { useCart } from "@/app/context/CartContext";
-import Layout2 from "@/app/components/layout";
-import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/autoplay";
 import Image from "next/image";
-
-// Define Product interface
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-}
+import Link from "next/link";
 
 // Sample Products
-const sampleProducts: Product[] = [
-  { id: 1, name: "Laptop", price: 899.99, image: "/images/laptop.jpg" },
-  { id: 2, name: "Smartphone", price: 499.99, image: "/images/smartphone.jpg" },
-  { id: 3, name: "Headphones", price: 199.99, image: "/images/headphones.jpg" },
-  { id: 4, name: "Keyboard", price: 49.99, image: "/images/keyboard.jpg" },
+const products = [
+  { id: 1, name: "Smartphone", price: 599, image: "/images/smartphone.jpg" },
+  { id: 2, name: "Laptop", price: 1099, image: "/images/laptop.jpg" },
+  { id: 3, name: "Headphones", price: 199, image: "/images/headphones.jpg" },
+  { id: 4, name: "Smart Watch", price: 299, image: "/images/keyboard.jpg" },
 ];
 
-// Special Offers for Carousel
+// Offers for the carousel
 const offers = [
-  { id: 1, text: "🔥 20% OFF on Laptops!", gradient: "bg-gradient-to-r from-red-500 to-orange-400" },
-  { id: 2, text: "📱 Free Shipping on Smartphones!", gradient: "bg-gradient-to-r from-green-500 to-teal-400" },
+  { id: 1, image: "/images/offer1.jpg", title: "Big Sale on Electronics!" },
+  { id: 2, image: "/images/offer2.jpg", title: "50% Off on Smartphones!" },
+  { id: 3, image: "/images/offer3.jpg", title: "Buy 1 Get 1 Free on Headphones!" },
 ];
 
-export default function ProductPage() {
-  const { addToCart } = useCart();
-  const [currentOffer, setCurrentOffer] = useState(0);
-
-  // Auto-scroll for offers
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentOffer((prev) => (prev + 1) % offers.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
+export default function ProductsPage() {
   return (
-    <Layout2>
-      {/* 🔥 Special Offers Carousel */}
-      <div className="relative w-full h-14 my-6 flex justify-center item center overflow-hidden z-10" >
-      
-          {offers.map((offer, index) => (
-            <div
-              key={offer.id}
-              className={`absolute w-80 text-center text-white font-semibold py-2 px-4 rounded-lg shadow-lg transition-all duration-500 ${offer.gradient} ${
-                index === currentOffer ? "opacity-100 scale-100" : "opacity-0 scale-90"
-              }`}
-            >
-              {offer.text}
-            </div>
+    <div className="p-6 bg-gray-100">
+      {/* Offer Carousel */}
+      <div className="mb-6">
+        <Swiper
+          modules={[Autoplay]}
+          slidesPerView={1}
+          autoplay={{ delay: 3000 }}
+          loop={true}
+          className="w-full h-[300px] md:h-[400px] rounded-lg shadow-lg"
+        >
+          {offers.map((offer) => (
+            <SwiperSlide key={offer.id} className="relative w-full h-[300px] md:h-[400px]">
+              <div className="relative w-full h-full">
+                <Image
+                  src={offer.image}
+                  alt={offer.title}
+                  fill
+                  className="object-cover w-full h-full rounded-lg"
+                  priority
+                  quality={100}
+                  sizes="(max-width:768px)100vw,(max-width:1200px)80vw,50vw"/>
+                
+              </div>
+            </SwiperSlide>
           ))}
-        </div>
-    
+        </Swiper>
+      </div>
 
-      {/* 🛍 Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-        {sampleProducts.map((product) => (
+      {/* Product Listing */}
+      <h1 className="text-3xl font-bold mb-4 text-center">Our Products</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {products.map((product) => (
           <div
             key={product.id}
-            className="bg-white shadow-xl rounded-lg p-4 transition-all duration-300 hover:shadow-2xl hover:scale-105 border border-gray-200"
+            className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition"
           >
-            <Link href={`/products/sampleProducts/${product.id}`} className="block">
+            <div className="relative w-full h-48">
               <Image
                 src={product.image}
                 alt={product.name}
-                width={300}
-                height={200}
-                className="w-full h-40 object-cover rounded-lg"
-                priority
+                fill
+                className="object-cover rounded-md"
               />
-            </Link>
-
-            <div className="mt-4">
-              <Link href={`/products/sampleProducts/${product.id}`} className="text-lg font-semibold hover:text-blue-500">
-                {product.name}
-              </Link>
-              <p className="text-gray-700 font-medium">${product.price}</p>
-              <button
-                onClick={() => addToCart(product)}
-                className="mt-2 w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all"
-              >
-                Buy Now 🛒
-              </button>
             </div>
+            <h2 className="text-xl font-semibold mt-4">{product.name}</h2>
+            <p className="text-gray-600">${product.price}</p>
+            <Link href={`/products/${product.id}`}>
+              <button className="mt-3 w-full flex items-center justify-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">
+                View
+              </button>
+            </Link>
           </div>
         ))}
       </div>
-    </Layout2>
+    </div>
   );
 }
