@@ -12,7 +12,7 @@ const products = [
   { id: 1, name: "Smartphone", price: 599, image: "/images/smartphone.jpg" },
   { id: 2, name: "Laptop", price: 1099, image: "/images/laptop.jpg" },
   { id: 3, name: "Headphones", price: 199, image: "/images/headphones.jpg" },
-  { id: 4, name: "Smart Watch", price: 299, image: "/images/keyboard.jpg" },
+  { id: 4, name: "keyboard", price: 299, image: "/images/keyboard.jpg" },
 ];
 
 // Offers for the carousel

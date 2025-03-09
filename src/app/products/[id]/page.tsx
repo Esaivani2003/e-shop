@@ -10,7 +10,7 @@ const products = [
   { id: 1, name: "Smartphone", price: 599, image: "/images/smartphone.jpg", description: "A high-end smartphone with great camera quality." },
   { id: 2, name: "Laptop", price: 1099, image: "/images/laptop.jpg", description: "Powerful laptop for gaming and work." },
   { id: 3, name: "Headphones", price: 199, image: "/images/headphones.jpg", description: "Noise-canceling wireless headphones." },
-  { id: 4, name: "Smart Watch", price: 299, image: "/images/smartwatch.jpg", description: "Feature-packed smartwatch with health tracking." }, // ✅ Fixed Image Path
+  { id: 4, name: "keyboard", price: 299, image: "/images/keyboard.jpg", description: "Feature-packed smartwatch with health tracking." }, // ✅ Fixed Image Path
 ];
 
 export default function ProductDetailPage() {
