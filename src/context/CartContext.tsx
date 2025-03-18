@@ -1,7 +1,9 @@
 "use client";
-import { createContext, useContext, useState, ReactNode } from "react";
-import { toast } from "react-toastify";
 
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import styles
+import { ToastContainer } from "react-toastify";
 
 // Define types for cart item and context
 interface CartItem {
@@ -16,6 +18,7 @@ interface CartContextType {
   cart: CartItem[];
   addToCart: (product: CartItem) => void;
   removeFromCart: (id: number) => void;
+  clearCart: () => void;
 }
 
 // Create context
@@ -24,6 +27,23 @@ const CartContext = createContext<CartContextType | null>(null);
 // CartProvider component
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+
+  // Load cart from localStorage after mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedCart = localStorage.getItem("cart");
+      if (storedCart) {
+        setCart(JSON.parse(storedCart));
+      }
+    }
+  }, []);
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart]);
 
   const addToCart = (product: CartItem) => {
     setCart((prevCart) => {
@@ -38,8 +58,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
     });
 
-    // Replace alert with toast
-    toast.success(`${product.name} added successfully!`);
+    toast.success(`${product.name} added to cart!`);
   };
 
   const removeFromCart = (id: number) => {
@@ -52,11 +71,17 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     toast.info("Item removed from cart");
   };
 
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem("cart");
+    toast.info("Cart cleared");
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
       {children}
-      {/* Add ToastContainer for notifications */}
-     
+      {/* Ensure ToastContainer is available for notifications */}
+      <ToastContainer position="top-right" autoClose={3000} />
     </CartContext.Provider>
   );
 };
@@ -67,5 +92,5 @@ export const useCart = () => {
   if (!context) {
     throw new Error("useCart must be used within a CartProvider");
   }
-  return context;
+  return context;
 };
