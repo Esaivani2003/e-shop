@@ -8,11 +8,9 @@ interface Product {
   price: number;
 }
 
-interface SearchBarProps {
-  products: Product[];
-}
+interface SearchBarProps {}
 
-const SearchBar: React.FC<SearchBarProps> = ({ products }) => {
+const SearchBar: React.FC<SearchBarProps> = () => {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
@@ -57,4 +55,4 @@ const SearchBar: React.FC<SearchBarProps> = ({ products }) => {
   );
 };
 
-export default SearchBar;
+export default SearchBar;

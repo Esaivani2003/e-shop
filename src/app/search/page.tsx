@@ -13,7 +13,7 @@ export default function SearchPage() {
 
   return (
     <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Search Results for "{query}"</h2>
+      <h2 className="text-2xl font-bold mb-4">Search Results for &quot;{query}&quot;</h2>
       {filteredProducts.length > 0 ? (
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {filteredProducts.map((product) => (
