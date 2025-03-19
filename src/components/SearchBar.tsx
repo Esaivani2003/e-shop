@@ -1,16 +1,9 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
-
-interface SearchBarProps {}
-
-const SearchBar: React.FC<SearchBarProps> = () => {
+const SearchBar: React.FC = () => {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
@@ -25,13 +18,13 @@ const SearchBar: React.FC<SearchBarProps> = () => {
   const clearSearch = () => setQuery("");
 
   return (
-    <form onSubmit={handleSearch} className="flex gap-2 items-center">
+    <form onSubmit={handleSearch} className="flex gap-2 items-center bg-white p-2 rounded-lg shadow">
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search..."
-        className="border rounded-lg px-3 py-2"
+        placeholder="Search products..."
+        className="border rounded-lg px-3 py-2 outline-none w-full text-gray-900"
         aria-label="Search products"
       />
       {query && (
@@ -44,7 +37,7 @@ const SearchBar: React.FC<SearchBarProps> = () => {
           ✕
         </button>
       )}
-      <button
+  <button
         type="submit"
         className="bg-blue-500 text-white px-4 py-2 rounded-lg"
         aria-label="Submit search"

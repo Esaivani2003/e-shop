@@ -6,9 +6,6 @@ import { ShoppingCart, Heart, Menu, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import SearchBar from "./SearchBar";
-import products from "../data/products.json";
-
-
 
 export default function Navbar() {
   const router = useRouter();
@@ -34,9 +31,9 @@ export default function Navbar() {
         <ul className="hidden md:flex space-x-6 text-lg font-medium">
           {navItems.map((item) => (
             <li key={item}>
-              <button
+ <button
                 className="hover:text-orange-400 transition"
-                onClick={() => router.push(item === "Home" ? "/" : `/${item.toLowerCase()}`)}
+                onClick={() => router.push(`item === "Home" ? "/" : /${item.toLowerCase()}`)}
               >
                 {item}
               </button>
@@ -44,8 +41,10 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Search Bar */}
-        
+        {/* Search Bar (Desktop) - Removed products prop */}
+        <div className="hidden md:block">
+          <SearchBar />
+        </div>
 
         {/* Icons Section */}
         <div className="flex items-center gap-4">
@@ -88,19 +87,19 @@ export default function Navbar() {
               key={item}
               className="block w-full py-2 text-center hover:text-orange-400"
               onClick={() => {
-                router.push(item === "Home" ? "/" : `/${item.toLowerCase()}`);
+                router.push(`item === "Home" ? "/" : /${item.toLowerCase()}`);
                 setIsOpen(false);
               }}
             >
               {item}
             </button>
           ))}
-          {/* Mobile Search Bar */}
-          <div className="mt-4">
-            <SearchBar products={products} />
+    {/* Mobile Search Bar - Removed products prop */}
+    <div className="mt-4">
+            <SearchBar />
           </div>
         </div>
       )}
-    </nav>
-  );
+    </nav>
+  );
 }
