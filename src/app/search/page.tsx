@@ -1,9 +1,10 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import products from "../../data/products.json"; // Make sure this file exists!
+import { Suspense } from "react";
+import products from "../../data/products.json"; // Ensure this file exists!
 
-export default function SearchPage() {
+function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q")?.toLowerCase() || "";
 
@@ -28,4 +29,12 @@ export default function SearchPage() {
       )}
     </div>
   );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<p className="text-gray-500">Loading search results...</p>}>
+      <SearchResults />
+    </Suspense>
+  );
 }
